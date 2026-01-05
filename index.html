@@ -18,19 +18,14 @@
             /* PALETA BASADA EN EL LOGO (CBS) */
             --bg-body: #f3f4f6;
             --surface: #ffffff;
-
-            /* Deep Space Blue (Extraído del fondo del logo)*/
             --primary-dark: #111827;
-
-            /* Bio-Tech Purple/Blue (Matiz secundario) */
+            /* Deep Space Blue */
             --secondary-brand: #4f46e5;
-
-            /* Signal Gold (Extraído del aspa del logo)*/
+            /* Bio-Tech Purple */
             --accent-gold: #d97706;
-
+            /* Signal Gold */
             --text-main: #374151;
             --text-light: #6b7280;
-
             --font-display: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
         }
@@ -38,7 +33,6 @@
         body {
             font-family: var(--font-body);
             background-color: var(--bg-body);
-            /* Patrón de puntos más sutil, puede ser cambiado si gustan */
             background-image: radial-gradient(#d1d5db 1px, transparent 1px);
             background-size: 24px 24px;
             color: var(--text-main);
@@ -62,10 +56,9 @@
             flex-direction: column;
         }
 
-        /* --- HEADER COMPACTO --- */
+        /* --- HEADER & TOP BAR --- */
         header {
             padding: 30px 40px 10px 40px;
-            /* Reducción del padding*/
             text-align: center;
             border-bottom: 1px solid #f3f4f6;
         }
@@ -97,52 +90,34 @@
             color: #fff;
         }
 
-        .brand-area {
+        .header-top {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 20px;
-            /* Un poco más de espacio entre logo y texto */
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        /* Contenedor del logo para asegurar centrado y tamaño */
-        .logo-container {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            overflow: hidden;
-            /* Recorta bordes cuadrados si la imagen no es transparente */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            /* Sombra para elevación */
-            border: 3px solid white;
-            /* Un borde blanco limpio */
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s ease;
-            /* Animación suave */
+        .mini-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
         }
 
-        .logo-container:hover {
-            transform: scale(1.05);
-            /* Efecto sutil al pasar el mouse, quizás innecesario pero puede dar estilo */
-        }
-
-        /* La imagen real del logo */
-        .logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Asegura que llene el círculo sin deformarse */
-            display: block;
+        .org-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            border-left: 2px solid #e5e7eb;
+            padding-left: 15px;
+            line-height: 1.2;
+            text-align: left;
         }
 
         h1 {
             font-family: var(--font-display);
             color: var(--primary-dark);
             font-size: 2rem;
-            /* Tamaño ajustado para no ocupar tanto */
             margin: 0;
             line-height: 1.1;
         }
@@ -156,19 +131,31 @@
             margin-top: 5px;
         }
 
-        /* --- LAYOUT PRINCIPAL (GRID) --- */
+        /* Intro Box (Dedicatoria) */
+        .intro-box {
+            background-color: #f9fafb;
+            border-left: 4px solid var(--secondary-brand);
+            padding: 15px 20px;
+            margin-top: 25px;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #4b5563;
+            font-style: italic;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* --- LAYOUT PRINCIPAL --- */
         .main-layout {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
-            /* Izquierda ancha, Derecha estrecha */
             gap: 0;
         }
 
-        /* COLUMNA IZQUIERDA: Contexto */
         .col-context {
             padding: 40px;
         }
 
+        /* Badges & Pills */
         .incentives-row {
             display: flex;
             gap: 15px;
@@ -180,7 +167,6 @@
             display: inline-flex;
             align-items: center;
             background: #eef2ff;
-            /* Azul muy pálido */
             color: var(--primary-dark);
             padding: 6px 12px;
             border-radius: 6px;
@@ -194,158 +180,6 @@
             margin-right: 6px;
         }
 
-        .text-block h3 {
-            font-family: var(--font-display);
-            color: var(--primary-dark);
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-            border-left: 3px solid var(--accent-gold);
-            padding-left: 10px;
-        }
-
-        .text-block p {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--text-main);
-            margin-bottom: 25px;
-        }
-
-        /* COLUMNA DERECHA: Acción (Action Box) */
-        .col-action {
-            background: var(--primary-dark);
-            /* Fondo Oscuro */
-            color: white;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            /* Textura sutil solo en la parte oscura */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-
-        .detail-group {
-            margin-bottom: 25px;
-        }
-
-        .detail-label {
-            display: block;
-            color: var(--accent-gold);
-            /* Dorado para etiquetas */
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-            font-weight: 700;
-        }
-
-        .detail-value {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: white;
-        }
-
-        .cta-button {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: var(--surface);
-            color: var(--primary-dark);
-            padding: 14px;
-            border-radius: 8px;
-            font-weight: 700;
-            text-decoration: none;
-            margin-top: 20px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            background: var(--accent-gold);
-            /* El botón se vuelve dorado al hover */
-            color: var(--primary-dark);
-            box-shadow: 0 5px 15px rgba(217, 119, 6, 0.4);
-        }
-
-        .disclaimer {
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        /* Responsive Mobile */
-        @media (max-width: 768px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .col-action {
-                order: -1;
-                padding: 30px;
-            }
-
-            /* Mueve los detalles ARRIBA en celular */
-            h1 {
-                font-size: 1.6rem;
-            }
-
-            header {
-                padding: 30px 20px;
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-
-        /* 1. Header Horizontal (Logo pequeño + Nombre) */
-        .header-top {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            /* Espacio antes del título */
-        }
-
-        .mini-logo {
-            width: 50px;
-            /* Pueden usar el anterior o este si quieren */
-            height: 50px;
-            object-fit: contain;
-        }
-
-        .org-name {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--text-light);
-            text-transform: uppercase;
-            border-left: 2px solid #e5e7eb;
-            /* Línea divisoria vertical */
-            padding-left: 15px;
-            line-height: 1.2;
-            text-align: left;
-        }
-
-        /* 2. Caja de Dedicatoria / Intro */
-        .intro-box {
-            background-color: #f9fafb;
-            border-left: 4px solid var(--secondary-brand);
-            /* Borde morado a la izquierda */
-            padding: 15px 20px;
-            margin-top: 25px;
-            text-align: left;
-            font-size: 0.95rem;
-            color: #4b5563;
-            font-style: italic;
-            border-radius: 0 6px 6px 0;
-        }
-
-        /* 3. Badges de Temática */
         .themes-wrapper {
             margin-top: 10px;
             margin-bottom: 30px;
@@ -376,33 +210,180 @@
             font-weight: 600;
         }
 
-        /* --- MODO NOCTURNO (Prueba) --- */
-
-        /* Cuando el cuerpo tenga la clase 'night-mode', cambiamos las variables */
-        body.night-mode {
-            --bg-body: #020617;
-            /* Fondo casi negro */
-            --surface: #0f172a;
-            /* Azul noche para la tarjeta principal */
-            --text-main: #e2e8f0;
-            /* Texto claro */
-            --text-light: #94a3b8;
-            /* Texto secundario gris claro */
-            /* Nota: No cambiamos --primary-dark porque la barra lateral ya es oscura */
+        /* Bloques de Texto */
+        .text-block h3 {
+            font-family: var(--font-display);
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 10px;
         }
 
-        /* Ajustes específicos para que se vea bien de noche */
+        .text-block p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 25px;
+        }
+
+        /* --- COLUMNA DERECHA (ACCIÓN) --- */
+        .col-action {
+            background: var(--primary-dark);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .detail-group {
+            margin-bottom: 25px;
+        }
+
+        .detail-label {
+            display: block;
+            color: var(--accent-gold);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .disclaimer {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* --- SMART BUTTON STYLES --- */
+        .contact-wrapper {
+            position: relative;
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-smart-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--surface);
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-smart-email:hover {
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(217, 119, 6, 0.3);
+        }
+
+        .copy-icon {
+            opacity: 0.6;
+            font-size: 1.1em;
+        }
+
+        /* Tooltip */
+        .tooltip-success {
+            visibility: hidden;
+            background-color: #10b981;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .tooltip-success::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #10b981 transparent transparent transparent;
+        }
+
+        .show-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* --- CLASES UTILITARIAS & RESPONSIVE --- */
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .col-action {
+                order: -1;
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            header {
+                padding: 30px 20px;
+            }
+        }
+
+        /* --- MODO NOCTURNO --- */
+        body.night-mode {
+            --bg-body: #020617;
+            --surface: #0f172a;
+            --text-main: #e2e8f0;
+            --text-light: #94a3b8;
+        }
+
         body.night-mode h1 {
             color: #ffffff;
-            /* Título blanco brillante */
         }
 
         body.night-mode .intro-box {
             background-color: #1e293b;
-            /* Caja de intro oscura */
             color: #cbd5e1;
             border-left-color: var(--accent-gold);
-            /* Cambiamos el borde a dorado para resaltar */
         }
 
         body.night-mode .org-name {
@@ -413,12 +394,10 @@
         body.night-mode .pill {
             background-color: #1e293b;
             color: var(--accent-gold);
-            /* Badges dorados en modo noche */
             border-color: #334155;
         }
 
         body.night-mode .col-sidebar {
-            /* Hacemos la barra lateral un poco más oscura para diferenciarla */
             background: #0b0f19;
             border-left: 1px solid #1e293b;
         }
@@ -474,6 +453,7 @@
                     <div class="badge"><span class="badge-icon">✦</span> Supported by FCB-UNMSM</div>
                     <div class="badge"><span class="badge-icon">✦</span> Global Networking</div>
                 </div>
+
                 <div class="themes-wrapper">
                     <span class="theme-label content-es">Ejes Temáticos:</span>
                     <span class="theme-label content-en hidden">Key Topics:</span>
@@ -505,6 +485,7 @@
                     <p class="content-en hidden" style="margin-bottom:0;">To drive the responsible, innovative, and
                         collaborative development of synthetic biology across diverse scientific contexts.</p>
                 </div>
+
                 <div class="text-block">
                     <h3 class="content-es">Público objetivo</h3>
                     <h3 class="content-en hidden">Target Audience</h3>
@@ -540,12 +521,22 @@
                     <div class="detail-value">2 Horas / Hours</div>
                 </div>
 
-                <a href="mailto:tuemail@unmsm.edu.pe" class="cta-button content-es">Contactanos para mas detalles</a>
-                <a href="mailto:tuemail@unmsm.edu.pe" class="cta-button content-en hidden">Contact us for more
-                    details</a>
+                <div class="contact-wrapper">
+                    <span class="tooltip-success" id="copyTooltip">
+                        <span class="content-es">¡Correo Copiado! ✅</span>
+                        <span class="content-en hidden">Email Copied! ✅</span>
+                    </span>
+
+                    <a href="mailto:cbsunmsm@gmail.com?subject=Información%20Simposio%20SynBio%202026"
+                        class="btn-smart-email" id="emailBtn" onclick="copyToClipboard(event)">
+                        <span class="content-es">Contáctanos</span>
+                        <span class="content-en hidden">Contact Us</span>
+                        <span class="copy-icon">✉️</span>
+                    </a>
+                </div>
 
                 <div style="text-align:center; margin-top:10px; font-size:0.75rem; color:rgba(255,255,255,0.6);">
-                    email: cbs.unmsm@gmail.com
+                    email: cbsunmsm@gmail.com
                 </div>
 
                 <p class="disclaimer content-es">* Información sujeta a cambios hasta 1 mes antes, en al que será
@@ -558,12 +549,16 @@
     </div>
 
     <script>
+        // 1. CONTROL DE IDIOMAS (Optimizada)
         function setLanguage(lang) {
             const esContent = document.querySelectorAll('.content-es');
             const enContent = document.querySelectorAll('.content-en');
             const btnEs = document.getElementById('btn-es');
             const btnEn = document.getElementById('btn-en');
+            const emailBtn = document.getElementById('emailBtn');
+            const targetEmail = "cbsunmsm@gmail.com";
 
+            // Cambio visual de textos
             if (lang === 'es') {
                 esContent.forEach(el => el.classList.remove('hidden'));
                 enContent.forEach(el => el.classList.add('hidden'));
@@ -575,16 +570,39 @@
                 btnEs.classList.remove('active');
                 btnEn.classList.add('active');
             }
+
+            // Actualización del Asunto del Correo(ingles o español)
+            if (emailBtn) {
+                let newSubject = "";
+                if (lang === 'es') {
+                    newSubject = "Información%20Simposio%20SynBio%202026";
+                } else {
+                    newSubject = "Information%20SynBio%20Symposium%202026";
+                }
+                emailBtn.href = "mailto:" + targetEmail + "?subject=" + newSubject;
+            }
         }
-        // LÓGICA DE MODO NOCTURNO AUTOMÁTICO
+
+        // 2. MODO NOCTURNO AUTOMÁTICO
         (function () {
             const hour = new Date().getHours();
-            // Definimos "noche" antes de las 6 AM (0-6) o después de las 6 PM (18-24)
             if (hour < 6 || hour >= 18) {
                 document.body.classList.add('night-mode');
                 console.log("Modo Nocturno Activado: Son las " + hour + " horas.");
             }
         })();
+
+        // 3. COPIAR AL PORTAPAPELES
+        function copyToClipboard(e) {
+            const email = "cbsunmsm@gmail.com";
+            navigator.clipboard.writeText(email).then(() => {
+                const tooltip = document.getElementById("copyTooltip");
+                tooltip.classList.add("show-tooltip");
+                setTimeout(() => {
+                    tooltip.classList.remove("show-tooltip");
+                }, 2000);
+            });
+        }
     </script>
 </body>
 
