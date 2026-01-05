@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación / Invitation | SynBio Symposium</title>
+    <title>Invitation | SynBio Symposium CBS</title>
 
+    <link rel="icon" type="image/png" href="cbs_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -14,17 +15,17 @@
 
     <style>
         :root {
-            /* PALETA BASADA EN EL LOGO (Color Science) */
+            /* PALETA BASADA EN EL LOGO (CBS) */
             --bg-body: #f3f4f6;
             --surface: #ffffff;
 
-            /* Deep Space Blue (Extraído del fondo del logo) - Autoridad */
+            /* Deep Space Blue (Extraído del fondo del logo)*/
             --primary-dark: #111827;
 
             /* Bio-Tech Purple/Blue (Matiz secundario) */
             --secondary-brand: #4f46e5;
 
-            /* Signal Gold (Extraído del aspa del logo) - Para Atencíón/Acción */
+            /* Signal Gold (Extraído del aspa del logo)*/
             --accent-gold: #d97706;
 
             --text-main: #374151;
@@ -37,7 +38,7 @@
         body {
             font-family: var(--font-body);
             background-color: var(--bg-body);
-            /* Patrón de puntos más sutil */
+            /* Patrón de puntos más sutil, puede ser cambiado si gustan */
             background-image: radial-gradient(#d1d5db 1px, transparent 1px);
             background-size: 24px 24px;
             color: var(--text-main);
@@ -64,7 +65,7 @@
         /* --- HEADER COMPACTO --- */
         header {
             padding: 30px 40px 10px 40px;
-            /* Reducido drásticamente el padding inferior */
+            /* Reducción del padding*/
             text-align: center;
             border-bottom: 1px solid #f3f4f6;
         }
@@ -96,8 +97,6 @@
             color: #fff;
         }
 
-        /* ... dentro de <style> ... */
-
         .brand-area {
             display: flex;
             flex-direction: column;
@@ -109,14 +108,12 @@
         /* Contenedor del logo para asegurar centrado y tamaño */
         .logo-container {
             width: 130px;
-            /* Aumentado de 80px a 130px para mayor presencia */
             height: 130px;
             border-radius: 50%;
-            /* Mantiene la forma circular si tu logo es redondo */
             overflow: hidden;
             /* Recorta bordes cuadrados si la imagen no es transparente */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            /* Sombra elegante para elevación */
+            /* Sombra para elevación */
             border: 3px solid white;
             /* Un borde blanco limpio */
             background: white;
@@ -129,7 +126,7 @@
 
         .logo-container:hover {
             transform: scale(1.05);
-            /* Efecto sutil al pasar el mouse */
+            /* Efecto sutil al pasar el mouse, quizás innecesario pero puede dar estilo */
         }
 
         /* La imagen real del logo */
@@ -305,7 +302,6 @@
             display: none !important;
         }
 
-        /* --- NUEVOS ESTILOS PARA HEADER Y TEMÁTICAS --- */
 
         /* 1. Header Horizontal (Logo pequeño + Nombre) */
         .header-top {
@@ -318,7 +314,7 @@
 
         .mini-logo {
             width: 50px;
-            /* Logo mucho más pequeño */
+            /* Pueden usar el anterior o este si quieren */
             height: 50px;
             object-fit: contain;
         }
@@ -379,6 +375,53 @@
             font-size: 0.8rem;
             font-weight: 600;
         }
+
+        /* --- MODO NOCTURNO (Prueba) --- */
+
+        /* Cuando el cuerpo tenga la clase 'night-mode', cambiamos las variables */
+        body.night-mode {
+            --bg-body: #020617;
+            /* Fondo casi negro */
+            --surface: #0f172a;
+            /* Azul noche para la tarjeta principal */
+            --text-main: #e2e8f0;
+            /* Texto claro */
+            --text-light: #94a3b8;
+            /* Texto secundario gris claro */
+            /* Nota: No cambiamos --primary-dark porque la barra lateral ya es oscura */
+        }
+
+        /* Ajustes específicos para que se vea bien de noche */
+        body.night-mode h1 {
+            color: #ffffff;
+            /* Título blanco brillante */
+        }
+
+        body.night-mode .intro-box {
+            background-color: #1e293b;
+            /* Caja de intro oscura */
+            color: #cbd5e1;
+            border-left-color: var(--accent-gold);
+            /* Cambiamos el borde a dorado para resaltar */
+        }
+
+        body.night-mode .org-name {
+            color: #94a3b8;
+            border-left-color: #334155;
+        }
+
+        body.night-mode .pill {
+            background-color: #1e293b;
+            color: var(--accent-gold);
+            /* Badges dorados en modo noche */
+            border-color: #334155;
+        }
+
+        body.night-mode .col-sidebar {
+            /* Hacemos la barra lateral un poco más oscura para diferenciarla */
+            background: #0b0f19;
+            border-left: 1px solid #1e293b;
+        }
     </style>
 </head>
 
@@ -400,18 +443,22 @@
             </div>
 
             <div style="text-align: center;">
-                <p class="tagline">Project Charter & Convocatoria</p>
+                <p class="tagline">Invitation letter & Convocatoria</p>
 
                 <h1 class="content-es">Simposio Internacional de<br>Biología Sintética</h1>
                 <h1 class="content-en hidden">International Symposium on<br>Synthetic Biology</h1>
 
                 <div class="intro-box content-es">
-                    "Invitamos a investigadores entusiastas por la difusión de sus avances. Este simposio reune a
-                    científicos a compartir sus avances en el campo de la biología sintética."
+                    "Este Simposio Internacional, impulsado por la Comunidad de Biología Sintética de la UNMSM, reúne a
+                    científicos referentes con el propósito de difundir sus avances más recientes en el campo. Buscamos
+                    crear un entorno educativo y colaborativo donde su investigación no solo informe, sino que inspire a
+                    la próxima generación de investigadores y fortalezca las redes de cooperación global."
                 </div>
                 <div class="intro-box content-en hidden">
-                    "We invite researchers passionate about sharing their advancements. This symposium brings together
-                    scientists to share their progress in the field of synthetic biology."
+                    "This International Symposium, driven by the Synthetic Biology Community of UNMSM, brings together
+                    leading scientists with the purpose of disseminating their latest advances in the field. We aim to
+                    create an educational and collaborative environment where their investigation not only informs but
+                    inspires the next generation of researchers and strengthens global cooperation networks."
                 </div>
             </div>
         </header>
@@ -420,11 +467,11 @@
 
             <div class="col-context">
                 <div class="content-es incentives-row">
-                    <div class="badge"><span class="badge-icon">✦</span> Organizado por la FCB-UNMSM</div>
+                    <div class="badge"><span class="badge-icon">✦</span> Apoyado por la FCB-UNMSM</div>
                     <div class="badge"><span class="badge-icon">✦</span> Networking Global</div>
                 </div>
                 <div class="content-en incentives-row hidden">
-                    <div class="badge"><span class="badge-icon">✦</span> Organized by FCB-UNMSM</div>
+                    <div class="badge"><span class="badge-icon">✦</span> Supported by FCB-UNMSM</div>
                     <div class="badge"><span class="badge-icon">✦</span> Global Networking</div>
                 </div>
                 <div class="themes-wrapper">
@@ -434,7 +481,7 @@
                     <div class="pills-container">
                         <span class="pill">Synthetic Biology</span>
                         <span class="pill">Gene Circuits</span>
-                        <span class="pill">Biremediation</span>
+                        <span class="pill">Bioremediation</span>
                         <span class="pill">wetlab/drylab</span>
                     </div>
                 </div>
@@ -457,6 +504,14 @@
                         colaborativo de la biología sintética en distintos contextos científicos.</p>
                     <p class="content-en hidden" style="margin-bottom:0;">To drive the responsible, innovative, and
                         collaborative development of synthetic biology across diverse scientific contexts.</p>
+                </div>
+                <div class="text-block">
+                    <h3 class="content-es">Público objetivo</h3>
+                    <h3 class="content-en hidden">Target Audience</h3>
+                    <p class="content-es" style="margin-bottom:0;">Estudiantes de pregrado, egresados e investigadores
+                    </p>
+                    <p class="content-en hidden" style="margin-bottom:0;">Undergraduate students, graduates and
+                        researchers</p>
                 </div>
             </div>
 
@@ -493,8 +548,10 @@
                     email: cbs.unmsm@gmail.com
                 </div>
 
-                <p class="disclaimer content-es">* Info sujeta a cambios hasta 1 mes antes.</p>
-                <p class="disclaimer content-en hidden">* Info subject to change up to 1 month prior.</p>
+                <p class="disclaimer content-es">* Información sujeta a cambios hasta 1 mes antes, en al que será
+                    notificado el investigador participante.</p>
+                <p class="disclaimer content-en hidden">* Information subject to change up to 1 month prior, when the
+                    participant researcher will be notified.</p>
             </div>
 
         </div>
@@ -519,6 +576,15 @@
                 btnEn.classList.add('active');
             }
         }
+        // LÓGICA DE MODO NOCTURNO AUTOMÁTICO
+        (function () {
+            const hour = new Date().getHours();
+            // Definimos "noche" antes de las 6 AM (0-6) o después de las 6 PM (18-24)
+            if (hour < 6 || hour >= 18) {
+                document.body.classList.add('night-mode');
+                console.log("Modo Nocturno Activado: Son las " + hour + " horas.");
+            }
+        })();
     </script>
 </body>
 
