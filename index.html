@@ -366,6 +366,10 @@
             header {
                 padding: 30px 20px;
             }
+
+            .intro-box {
+                padding: 15px;
+            }
         }
 
         /* --- MODO NOCTURNO --- */
@@ -378,6 +382,20 @@
 
         body.night-mode h1 {
             color: #ffffff;
+        }
+
+        /*Títulos H3 blancos en modo noche --- */
+        body.night-mode .text-block h3 {
+            color: #ffffff !important;
+        }
+
+        /* --- CORRECCIÓN AQUÍ: Ajuste de Badges para que no brillen tanto --- */
+        body.night-mode .badge {
+            background-color: #1e293b;
+            /* Fondo oscuro */
+            color: var(--accent-gold);
+            /* Texto dorado */
+            border-color: #334155;
         }
 
         body.night-mode .intro-box {
@@ -400,6 +418,23 @@
         body.night-mode .col-sidebar {
             background: #0b0f19;
             border-left: 1px solid #1e293b;
+        }
+
+        /*Botón de Contacto en Modo Noche --- */
+        body.night-mode .btn-smart-email {
+            color: var(--accent-gold);
+            /* Texto Dorado */
+            border-color: var(--accent-gold);
+            /* Borde Dorado */
+            background-color: rgba(255, 255, 255, 0.05);
+            /* Un fondo muy sutil para darle cuerpo */
+        }
+
+        /* Ajuste opcional para el icono de sobre en modo noche */
+        body.night-mode .copy-icon {
+            filter: brightness(0) invert(1);
+            /* Vuelve el icono blanco */
+            opacity: 1;
         }
     </style>
 </head>
@@ -588,9 +623,12 @@
         // 2. MODO NOCTURNO AUTOMÁTICO
         (function () {
             const hour = new Date().getHours();
-            if (hour < 6 || hour >= 18) {
+            // Detecta si el usuario tiene su PC/Celular en modo oscuro
+            const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            // Se activa si es de noche (18h-6h) O si el usuario lo prefiere así
+            if (hour < 6 || hour >= 18 || userPrefersDark) {
                 document.body.classList.add('night-mode');
-                console.log("Modo Nocturno Activado: Son las " + hour + " horas.");
             }
         })();
 
