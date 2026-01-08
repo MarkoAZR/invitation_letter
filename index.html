@@ -71,6 +71,9 @@
             padding: 4px;
             border-radius: 20px;
             z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .lang-btn {
@@ -88,6 +91,53 @@
         .lang-btn.active {
             background: var(--primary-dark);
             color: #fff;
+        }
+
+        /* --- BOTÓN TOGGLE TEMA (Rediseño Minimalista SVG) --- */
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            /* Un poco más de área de clic */
+            height: 40px;
+            border: none;
+            /* Quitamos el borde */
+            background-color: transparent;
+            /* Fondo transparente */
+            cursor: pointer;
+            padding: 0;
+            transition: transform 0.3s ease;
+
+            /* Estado por defecto (Día): Color gris sutil */
+            color: var(--text-light);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background-color: transparent;
+            /* Evitamos fondo al hover */
+            color: var(--accent-gold);
+            /* Al pasar el mouse en día, se insinúa el color */
+        }
+
+        /* Lógica cuando está en MODO NOCHE */
+        body.night-mode .theme-toggle {
+            /* El foco se "enciende" en dorado */
+            color: var(--accent-gold);
+            /* Efecto de resplandor suave (Glow) */
+            filter: drop-shadow(0 0 8px rgba(217, 119, 6, 0.6));
+        }
+
+        body.night-mode .theme-toggle svg {
+            fill: rgba(217, 119, 6, 0.2);
+            /* Relleno sutil del foco */
         }
 
         .header-top {
@@ -415,11 +465,6 @@
             border-color: #334155;
         }
 
-        body.night-mode .col-sidebar {
-            background: #0b0f19;
-            border-left: 1px solid #1e293b;
-        }
-
         /*Botón de Contacto en Modo Noche --- */
         body.night-mode .btn-smart-email {
             color: var(--accent-gold);
@@ -443,6 +488,31 @@
 
     <div class="container">
         <div class="lang-switch">
+            <button class="theme-toggle" id="themeToggle" title="Cambiar tema / Toggle theme" aria-label="Toggle theme">
+                <svg class="bulb-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9C5 11.38 6.19 13.47 8 14.74V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V14.74C17.81 13.47 19 11.38 19 9C19 5.13 15.87 2 12 2ZM9 20H15V21C15 21.55 14.55 22 14 22H10C9.45 22 9 21.55 9 21V20Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <g class="light-rays" opacity="0">
+                        <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                    </g>
+                </svg>
+            </button>
             <button class="lang-btn active" id="btn-es" onclick="setLanguage('es')">ES</button>
             <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
         </div>
@@ -586,63 +656,249 @@
     </div>
 
     <script>
-        // 1. CONTROL DE IDIOMAS (Optimizada)
-        function setLanguage(lang) {
-            const esContent = document.querySelectorAll('.content-es');
-            const enContent = document.querySelectorAll('.content-en');
-            const btnEs = document.getElementById('btn-es');
-            const btnEn = document.getElementById('btn-en');
-            const emailBtn = document.getElementById('emailBtn');
-            const targetEmail = "cbsunmsm@gmail.com";
+        // ===== CONFIGURACIÓN INICIAL =====
+        const APP_CONFIG = {
+            emailTarget: "cbsunmsm@gmail.com",
+            tooltipDuration: 2000,
+            storagePrefix: "synbio_"
+        };
 
-            // Cambio visual de textos
-            if (lang === 'es') {
-                esContent.forEach(el => el.classList.remove('hidden'));
-                enContent.forEach(el => el.classList.add('hidden'));
-                btnEs.classList.add('active');
-                btnEn.classList.remove('active');
-            } else {
-                esContent.forEach(el => el.classList.add('hidden'));
-                enContent.forEach(el => el.classList.remove('hidden'));
-                btnEs.classList.remove('active');
-                btnEn.classList.add('active');
+        // Variables globales para acceso desde HTML
+        let languageManager = null;
+        let themeManager = null;
+
+        // ===== 1. SISTEMA DE TEMA (Light/Dark Mode) =====
+        class ThemeManager {
+            constructor() {
+                this.darkModeKey = APP_CONFIG.storagePrefix + "darkMode";
+                this.init();
             }
 
-            // Actualización del Asunto del Correo(ingles o español)
-            if (emailBtn) {
-                let newSubject = "";
-                if (lang === 'es') {
-                    newSubject = "Información%20Simposio%20SynBio%202026";
+            /**
+             * Inicializa el tema: verifica localStorage, luego el SO,
+             * finalmente la hora del sistema
+             */
+            init() {
+                const savedTheme = localStorage.getItem(this.darkModeKey);
+
+                // Si hay preferencia guardada, usarla
+                if (savedTheme !== null) {
+                    this.setDarkMode(JSON.parse(savedTheme));
                 } else {
-                    newSubject = "Information%20SynBio%20Symposium%202026";
+                    // Si no, detectar automáticamente
+                    this.detectAutomaticTheme();
                 }
-                emailBtn.href = "mailto:" + targetEmail + "?subject=" + newSubject;
+
+                // Agregar listener al botón
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) {
+                    themeToggle.addEventListener('click', () => this.toggleTheme());
+                }
+
+                // Escuchar cambios en las preferencias del SO
+                if (window.matchMedia) {
+                    window.matchMedia('(prefers-color-scheme: dark)')
+                        .addEventListener('change', (e) => {
+                            // Solo aplicar si NO hay preferencia guardada del usuario
+                            if (localStorage.getItem(this.darkModeKey) === null) {
+                                this.setDarkMode(e.matches);
+                            }
+                        });
+                }
+            }
+
+            /**
+             * Detecta automáticamente si debe usar dark mode
+             * Prioridad: SO > Hora del día
+             */
+            detectAutomaticTheme() {
+                let isDark = false;
+
+                // Primero: Preferencia del SO
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    isDark = true;
+                } else {
+                    // Segundo: Hora del día (18:00 - 06:00)
+                    const hour = new Date().getHours();
+                    isDark = hour < 6 || hour >= 18;
+                }
+
+                this.setDarkMode(isDark);
+            }
+
+            /**
+             * Aplica el tema y actualiza el botón
+             */
+            /**
+     * Aplica el tema (Solo maneja clases CSS)
+     */
+            setDarkMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('night-mode');
+                    // Eliminamos la llamada a this.updateToggleButton('🌙');
+                } else {
+                    document.body.classList.remove('night-mode');
+                    // Eliminamos la llamada a this.updateToggleButton('☀️');
+                }
+            }
+
+            /**
+             * Cambia entre light y dark mode
+             */
+            toggleTheme() {
+                const isDark = document.body.classList.toggle('night-mode');
+                localStorage.setItem(this.darkModeKey, JSON.stringify(isDark));
+                // Ya no necesitamos llamar a updateToggleButton aquí tampoco
+            }
+
+            /**
+             * ELIMINAR O DEJAR VACÍO ESTE MÉTODO
+             * Ya no necesitamos cambiar el texto por emojis
+             */
+            updateToggleButton(emoji) {
+                // Método obsoleto con el nuevo diseño SVG
             }
         }
 
-        // 2. MODO NOCTURNO AUTOMÁTICO
-        (function () {
-            const hour = new Date().getHours();
-            // Detecta si el usuario tiene su PC/Celular en modo oscuro
-            const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            // Se activa si es de noche (18h-6h) O si el usuario lo prefiere así
-            if (hour < 6 || hour >= 18 || userPrefersDark) {
-                document.body.classList.add('night-mode');
+        // ===== 2. SISTEMA DE IDIOMAS =====
+        class LanguageManager {
+            constructor() {
+                this.langKey = APP_CONFIG.storagePrefix + "language";
+                this.currentLang = this.getSavedLanguage() || 'es';
+                this.init();
             }
-        })();
 
-        // 3. COPIAR AL PORTAPAPELES
+            /**
+             * Obtiene el idioma guardado en localStorage
+             */
+            getSavedLanguage() {
+                return localStorage.getItem(this.langKey);
+            }
+
+            /**
+             * Inicializa el sistema de idiomas
+             */
+            init() {
+                this.setLanguage(this.currentLang);
+            }
+
+            /**
+             * Cambia el idioma y guarda la preferencia
+             */
+            setLanguage(lang) {
+                if (!['es', 'en'].includes(lang)) return;
+
+                const esContent = document.querySelectorAll('.content-es');
+                const enContent = document.querySelectorAll('.content-en');
+                const btnEs = document.getElementById('btn-es');
+                const btnEn = document.getElementById('btn-en');
+
+                // Actualizar visibilidad
+                if (lang === 'es') {
+                    esContent.forEach(el => el.classList.remove('hidden'));
+                    enContent.forEach(el => el.classList.add('hidden'));
+                    btnEs?.classList.add('active');
+                    btnEn?.classList.remove('active');
+                } else {
+                    esContent.forEach(el => el.classList.add('hidden'));
+                    enContent.forEach(el => el.classList.remove('hidden'));
+                    btnEs?.classList.remove('active');
+                    btnEn?.classList.add('active');
+                }
+
+                // Actualizar asunto del correo
+                this.updateEmailSubject(lang);
+
+                // Guardar preferencia
+                localStorage.setItem(this.langKey, lang);
+                this.currentLang = lang;
+            }
+
+            /**
+             * Actualiza el asunto del email según el idioma
+             */
+            updateEmailSubject(lang) {
+                const emailBtn = document.getElementById('emailBtn');
+                if (!emailBtn) return;
+
+                const subjects = {
+                    es: "Información%20Simposio%20SynBio%202026",
+                    en: "Information%20SynBio%20Symposium%202026"
+                };
+
+                emailBtn.href = `mailto:${APP_CONFIG.emailTarget}?subject=${subjects[lang]}`;
+            }
+        }
+
+        // ===== FUNCIÓN GLOBAL PARA CAMBIO DE IDIOMA (desde onclick en HTML) =====
+        function setLanguage(lang) {
+            if (languageManager) {
+                languageManager.setLanguage(lang);
+            }
+        }
+
+        // ===== 3. SISTEMA DE CLIPBOARD =====
+        /**
+         * Copia el email al portapapeles y muestra tooltip
+         */
         function copyToClipboard(e) {
-            const email = "cbsunmsm@gmail.com";
-            navigator.clipboard.writeText(email).then(() => {
-                const tooltip = document.getElementById("copyTooltip");
-                tooltip.classList.add("show-tooltip");
-                setTimeout(() => {
-                    tooltip.classList.remove("show-tooltip");
-                }, 2000);
-            });
+            e.preventDefault();
+
+            // Validar disponibilidad de API
+            if (!navigator.clipboard) {
+                console.warn('Clipboard API no disponible');
+                fallbackCopy(APP_CONFIG.emailTarget);
+                return;
+            }
+
+            navigator.clipboard
+                .writeText(APP_CONFIG.emailTarget)
+                .then(() => {
+                    showTooltip();
+                })
+                .catch((err) => {
+                    console.error('Error al copiar:', err);
+                    fallbackCopy(APP_CONFIG.emailTarget);
+                });
         }
+
+        /**
+         * Fallback para copiar (navegadores antiguos)
+         */
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+                showTooltip();
+            } catch (err) {
+                console.error('Fallback copy falló:', err);
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        /**
+         * Muestra el tooltip de confirmación
+         */
+        function showTooltip() {
+            const tooltip = document.getElementById("copyTooltip");
+            if (!tooltip) return;
+
+            tooltip.classList.add("show-tooltip");
+            setTimeout(() => {
+                tooltip.classList.remove("show-tooltip");
+            }, APP_CONFIG.tooltipDuration);
+        }
+
+        // ===== INICIALIZACIÓN AL CARGAR =====
+        document.addEventListener('DOMContentLoaded', () => {
+            themeManager = new ThemeManager();
+            languageManager = new LanguageManager();
+        });
     </script>
 </body>
 
