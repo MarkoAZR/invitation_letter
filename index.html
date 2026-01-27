@@ -15,25 +15,37 @@
 
     <style>
         :root {
-            /* PALETA BASADA EN EL LOGO (CBS) */
-            --bg-body: #f3f4f6;
+            /* PALETA OFICIAL CBS 2026 */
+            --cbs-dark: #122240;
+            /* Color 1: Azul Profundo */
+            --cbs-blue: #154f9b;
+            /* Color 2: Azul Corporativo */
+            --cbs-green: #179e75;
+            /* Color 3: Verde Bio */
+            --cbs-yellow: #e3df72;
+            /* Color 4: Amarillo Señal */
+            --cbs-neutral: #f8efed;
+            /* Color 5: Fondo Claro */
+            --cbs-cream: #f8efb7;
+            /* Color 6: Contraste Suave */
+
+            /* MAPEO DE VARIABLES DINÁMICAS */
+            --bg-body: var(--cbs-neutral);
             --surface: #ffffff;
-            --primary-dark: #111827;
-            /* Deep Space Blue */
-            --secondary-brand: #4f46e5;
-            /* Bio-Tech Purple */
-            --accent-gold: #d97706;
-            /* Signal Gold */
-            --text-main: #374151;
-            --text-light: #6b7280;
+            --primary-brand: var(--cbs-dark);
+            --secondary-brand: var(--cbs-blue);
+            --accent-gold: var(--cbs-yellow);
+            --text-main: var(--cbs-dark);
+            --text-light: #4b5563;
             --font-display: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
         }
 
+        /* --- BASE & LAYOUT --- */
         body {
             font-family: var(--font-body);
             background-color: var(--bg-body);
-            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+            background-image: radial-gradient(var(--cbs-cream) 1px, transparent 1px);
             background-size: 24px 24px;
             color: var(--text-main);
             margin: 0;
@@ -42,13 +54,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background-color 0.3s ease;
         }
 
         .container {
             width: 100%;
             max-width: 900px;
             background: var(--surface);
-            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px -5px rgba(18, 34, 64, 0.15);
             border-radius: 12px;
             overflow: hidden;
             position: relative;
@@ -56,18 +69,16 @@
             flex-direction: column;
         }
 
-        /* --- HEADER & TOP BAR --- */
-        header {
-            padding: 30px 40px 10px 40px;
-            text-align: center;
-            border-bottom: 1px solid #f3f4f6;
+        /* --- LÓGICA DE IDIOMAS Y UTILIDADES (REINSTAURADO) --- */
+        .hidden {
+            display: none !important;
         }
 
         .lang-switch {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: #f3f4f6;
+            background: var(--cbs-neutral);
             padding: 4px;
             border-radius: 20px;
             z-index: 10;
@@ -83,34 +94,38 @@
             border-radius: 15px;
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--text-light);
+            color: var(--cbs-blue);
             cursor: pointer;
             transition: 0.2s;
         }
 
         .lang-btn.active {
-            background: var(--primary-dark);
+            background: var(--cbs-dark);
             color: #fff;
         }
 
-        /* --- BOTÓN TOGGLE TEMA (Rediseño Minimalista SVG) --- */
+        /* --- HEADER & TOP BAR --- */
+        header {
+            background-color: #ffffff;
+            border-bottom: 2px solid var(--cbs-cream);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 30px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
         .theme-toggle {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             width: 40px;
-            /* Un poco más de área de clic */
             height: 40px;
             border: none;
-            /* Quitamos el borde */
             background-color: transparent;
-            /* Fondo transparente */
             cursor: pointer;
             padding: 0;
             transition: transform 0.3s ease;
-
-            /* Estado por defecto (Día): Color gris sutil */
-            color: var(--text-light);
+            color: var(--cbs-blue);
         }
 
         .theme-toggle svg {
@@ -121,23 +136,7 @@
 
         .theme-toggle:hover {
             transform: scale(1.1);
-            background-color: transparent;
-            /* Evitamos fondo al hover */
-            color: var(--accent-gold);
-            /* Al pasar el mouse en día, se insinúa el color */
-        }
-
-        /* Lógica cuando está en MODO NOCHE */
-        body.night-mode .theme-toggle {
-            /* El foco se "enciende" en dorado */
-            color: var(--accent-gold);
-            /* Efecto de resplandor suave (Glow) */
-            filter: drop-shadow(0 0 8px rgba(217, 119, 6, 0.6));
-        }
-
-        body.night-mode .theme-toggle svg {
-            fill: rgba(217, 119, 6, 0.2);
-            /* Relleno sutil del foco */
+            color: var(--cbs-green);
         }
 
         .header-top {
@@ -145,56 +144,53 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 25px;
+            padding-bottom: 20px;
         }
 
         .mini-logo {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: auto;
             object-fit: contain;
         }
 
         .org-name {
             font-size: 0.85rem;
             font-weight: 700;
-            color: var(--text-light);
-            text-transform: uppercase;
-            border-left: 2px solid #e5e7eb;
+            color: var(--cbs-blue);
+            border-left: 3px solid var(--cbs-green);
             padding-left: 15px;
             line-height: 1.2;
-            text-align: left;
         }
 
         h1 {
             font-family: var(--font-display);
-            color: var(--primary-dark);
+            color: var(--cbs-dark);
             font-size: 2rem;
             margin: 0;
             line-height: 1.1;
         }
 
         .tagline {
-            color: var(--secondary-brand);
+            color: var(--cbs-green);
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-weight: 600;
+            font-weight: 700;
             margin-top: 5px;
         }
 
-        /* Intro Box (Dedicatoria) */
         .intro-box {
-            background-color: #f9fafb;
-            border-left: 4px solid var(--secondary-brand);
+            background-color: var(--cbs-neutral);
+            border-left: 5px solid var(--cbs-yellow);
             padding: 15px 20px;
             margin-top: 25px;
-            text-align: left;
             font-size: 0.95rem;
-            color: #4b5563;
+            color: var(--cbs-dark);
             font-style: italic;
             border-radius: 0 6px 6px 0;
         }
 
-        /* --- LAYOUT PRINCIPAL --- */
+        /* --- LAYOUT & COMPONENTES --- */
         .main-layout {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
@@ -205,7 +201,6 @@
             padding: 40px;
         }
 
-        /* Badges & Pills */
         .incentives-row {
             display: flex;
             gap: 15px;
@@ -216,18 +211,13 @@
         .badge {
             display: inline-flex;
             align-items: center;
-            background: #eef2ff;
-            color: var(--primary-dark);
+            background: var(--cbs-cream);
+            color: var(--cbs-dark);
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 0.8rem;
-            font-weight: 500;
-            border: 1px solid #e0e7ff;
-        }
-
-        .badge-icon {
-            color: var(--accent-gold);
-            margin-right: 6px;
+            font-weight: 600;
+            border: 1px solid var(--cbs-yellow);
         }
 
         .themes-wrapper {
@@ -238,36 +228,28 @@
         .theme-label {
             display: block;
             font-size: 0.75rem;
-            color: var(--text-light);
+            color: var(--cbs-blue);
             text-transform: uppercase;
             font-weight: 700;
             margin-bottom: 8px;
         }
 
-        .pills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
         .pill {
-            background-color: #f3f4f6;
-            color: var(--primary-dark);
-            border: 1px solid #e5e7eb;
+            background-color: var(--cbs-dark);
+            color: white;
             padding: 6px 14px;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 600;
         }
 
-        /* Bloques de Texto */
         .text-block h3 {
             font-family: var(--font-display);
-            color: var(--primary-dark);
+            color: var(--cbs-blue);
             margin-top: 0;
             margin-bottom: 10px;
             font-size: 1.2rem;
-            border-left: 3px solid var(--accent-gold);
+            border-left: 4px solid var(--cbs-green);
             padding-left: 10px;
         }
 
@@ -278,27 +260,73 @@
             margin-bottom: 25px;
         }
 
-        /* --- COLUMNA DERECHA (ACCIÓN) --- */
+        .disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        /* --- CRONOGRAMA --- */
+        .schedule-box {
+            background-color: #ffffff;
+            border: 1px solid var(--cbs-cream);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .schedule-row {
+            display: grid;
+            grid-template-columns: 85px 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--cbs-cream);
+            align-items: start;
+        }
+
+        .schedule-row:last-child {
+            border-bottom: none;
+        }
+
+        .time-slot {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .t-intro {
+            color: var(--cbs-blue);
+        }
+
+        .t-main {
+            color: var(--cbs-green);
+        }
+
+        .t-qa {
+            color: var(--cbs-blue);
+        }
+
+        L .t-net {
+            color: var(--cbs-green);
+        }
+
+        /* --- COLUMNA DE ACCIÓN --- */
         .col-action {
-            background: var(--primary-dark);
+            background: var(--cbs-dark);
             color: white;
             padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 20px 20px;
-        }
-
-        .detail-group {
-            margin-bottom: 25px;
         }
 
         .detail-label {
             display: block;
-            color: var(--accent-gold);
+            color: var(--cbs-yellow);
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -306,87 +334,61 @@
             font-weight: 700;
         }
 
-        .detail-value {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: white;
+        .benefit-icon {
+            background: rgba(23, 158, 117, 0.2);
+            color: var(--cbs-green);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
-        .disclaimer {
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        /* --- SMART BUTTON STYLES --- */
+        /* --- BOTONES & TOOLTIPS --- */
         .contact-wrapper {
             position: relative;
-            display: block;
-            width: 100%;
             text-align: center;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
 
         .btn-smart-email {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background-color: var(--surface);
-            color: var(--primary-dark);
-            border: 2px solid var(--primary-dark);
+            background-color: var(--cbs-green);
+            color: white;
+            border: none;
             padding: 12px 25px;
             border-radius: 50px;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: 0.2s;
             cursor: pointer;
-            font-size: 0.95rem;
         }
 
         .btn-smart-email:hover {
-            background-color: var(--accent-gold);
-            border-color: var(--accent-gold);
-            color: white;
+            background-color: var(--cbs-yellow);
+            color: var(--cbs-dark);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(217, 119, 6, 0.3);
+            box-shadow: 0 5px 15px rgba(227, 223, 114, 0.4);
         }
 
-        .copy-icon {
-            opacity: 0.6;
-            font-size: 1.1em;
-        }
-
-        /* Tooltip */
         .tooltip-success {
             visibility: hidden;
-            background-color: #10b981;
+            background-color: var(--cbs-green);
             color: #fff;
             text-align: center;
             border-radius: 6px;
             padding: 5px 12px;
             position: absolute;
-            z-index: 1;
             bottom: 110%;
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: 0.3s;
             font-size: 0.75rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .tooltip-success::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #10b981 transparent transparent transparent;
+            z-index: 10;
         }
 
         .show-tooltip {
@@ -394,11 +396,46 @@
             opacity: 1;
         }
 
-        /* --- CLASES UTILITARIAS & RESPONSIVE --- */
-        .hidden {
-            display: none !important;
+        /* --- ELEMENTOS DE BENEFICIO Y DETALLE --- */
+        .detail-value {
+            font-size: 0.95rem;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
 
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .benefit-text {
+            font-size: 0.9rem;
+            color: white;
+            transition: color 0.3s ease;
+            line-height: 1.4;
+        }
+
+        .detail-group {
+            margin-bottom: 15px;
+        }
+
+        .benefits-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 15px 0;
+        }
+
+        .schedule-description {
+            font-size: 0.8em;
+            opacity: 0.8;
+            margin-top: 4px;
+            color: var(--text-main);
+        }
+
+        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .main-layout {
                 grid-template-columns: 1fr;
@@ -408,78 +445,105 @@
                 order: -1;
                 padding: 30px;
             }
-
-            h1 {
-                font-size: 1.6rem;
-            }
-
-            header {
-                padding: 30px 20px;
-            }
-
-            .intro-box {
-                padding: 15px;
-            }
         }
 
         /* --- MODO NOCTURNO --- */
         body.night-mode {
-            --bg-body: #020617;
-            --surface: #0f172a;
-            --text-main: #e2e8f0;
+            --bg-body: #0a0f1d;
+            --surface: var(--cbs-dark);
+            --text-main: var(--cbs-neutral);
             --text-light: #94a3b8;
         }
 
-        body.night-mode h1 {
-            color: #ffffff;
-        }
-
-        /*Títulos H3 blancos en modo noche --- */
-        body.night-mode .text-block h3 {
-            color: #ffffff !important;
-        }
-
-        /* --- CORRECCIÓN AQUÍ: Ajuste de Badges para que no brillen tanto --- */
-        body.night-mode .badge {
-            background-color: #1e293b;
-            /* Fondo oscuro */
-            color: var(--accent-gold);
-            /* Texto dorado */
-            border-color: #334155;
+        body.night-mode header {
+            background-color: var(--cbs-dark);
+            border-bottom-color: var(--cbs-blue);
         }
 
         body.night-mode .intro-box {
-            background-color: #1e293b;
-            color: #cbd5e1;
-            border-left-color: var(--accent-gold);
+            background-color: var(--cbs-blue);
+            color: var(--cbs-neutral);
+        }
+
+        body.night-mode .schedule-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--cbs-blue);
+        }
+
+        body.night-mode .theme-toggle {
+            color: var(--cbs-yellow);
+            filter: drop-shadow(0 0 8px rgba(227, 223, 114, 0.6));
+        }
+
+        /* --- DARK MODE MEJORADO: CONTRASTE DE ELEMENTOS --- */
+        body.night-mode .theme-label {
+            color: var(--cbs-yellow);
+        }
+
+        body.night-mode .schedule-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--cbs-blue);
+        }
+
+        body.night-mode .schedule-row div:not(.time-slot) {
+            color: var(--cbs-neutral);
+        }
+
+        body.night-mode .time-slot {
+            color: var(--cbs-yellow);
+            font-weight: 700;
+        }
+
+        body.night-mode .t-intro {
+            color: var(--cbs-yellow);
+        }
+
+        body.night-mode .t-main {
+            color: var(--cbs-green);
+        }
+
+        body.night-mode .t-qa {
+            color: var(--cbs-yellow);
+        }
+
+        body.night-mode .t-net {
+            color: var(--cbs-green);
+        }
+
+        body.night-mode .disclaimer {
+            color: var(--cbs-yellow);
+        }
+
+        body.night-mode .detail-value {
+            color: var(--cbs-yellow);
+        }
+
+        body.night-mode .benefit-text {
+            color: var(--cbs-neutral);
+        }
+
+        body.night-mode .schedule-description {
+            opacity: 1;
+            color: var(--cbs-neutral);
+        }
+
+        /* --- DARK MODE: TÍTULOS Y SUBTÍTULOS --- */
+        body.night-mode h1 {
+            color: var(--cbs-yellow);
+        }
+
+        body.night-mode .text-block h3 {
+            color: var(--cbs-yellow);
+            border-left-color: var(--cbs-green);
         }
 
         body.night-mode .org-name {
-            color: #94a3b8;
-            border-left-color: #334155;
+            color: var(--cbs-yellow);
+            border-left-color: var(--cbs-green);
         }
 
-        body.night-mode .pill {
-            background-color: #1e293b;
-            color: var(--accent-gold);
-            border-color: #334155;
-        }
-
-        /*Botón de Contacto en Modo Noche --- */
-        body.night-mode .btn-smart-email {
-            color: var(--accent-gold);
-            /* Texto Dorado */
-            border-color: var(--accent-gold);
-            /* Borde Dorado */
-            background-color: rgba(255, 255, 255, 0.05);
-            /* Un fondo muy sutil para darle cuerpo */
-        }
-
-        /* Ajuste opcional para el icono de sobre en modo noche */
-        body.night-mode .copy-icon {
-            filter: brightness(0) invert(1);
-            /* Vuelve el icono blanco */
-            opacity: 1;
+        body.night-mode .tagline {
+            color: var(--cbs-green);
         }
     </style>
 </head>
@@ -524,25 +588,32 @@
                     <span class="content-es">Comunidad de<br>Biología Sintética - UNMSM</span>
                     <span class="content-en hidden">Synthetic Biology<br>Community - UNMSM</span>
                 </div>
+                <img src="unmsm_logo.png" alt="Logo" class="mini-logo">
+                <div class="org-name">
+                    <span class="content-es">Facultad de<br>Ciencias Biológicas</span>
+                    <span class="content-en hidden">Faculty of<br>Biological Sciences</span>
+                </div>
             </div>
 
             <div style="text-align: center;">
-                <p class="tagline">Invitation letter & Convocatoria</p>
+                <p class="tagline">Speaker Brief & Project Charter</p>
 
-                <h1 class="content-es">Simposio Internacional de<br>Biología Sintética</h1>
-                <h1 class="content-en hidden">International Symposium on<br>Synthetic Biology</h1>
+                <h1 class="content-es">Simposio Internacional de<br>Biología Sintética 2026</h1>
+                <h1 class="content-en hidden">International Symposium on<br>Synthetic Biology 2026</h1>
 
                 <div class="intro-box content-es">
-                    "Este Simposio Internacional, impulsado por la Comunidad de Biología Sintética de la UNMSM, reúne a
-                    científicos referentes con el propósito de difundir sus avances más recientes en el campo. Buscamos
-                    crear un entorno educativo y colaborativo donde su investigación no solo informe, sino que inspire a
-                    la próxima generación de investigadores y fortalezca las redes de cooperación global."
+                    El Symposium internacional de Biología Sintética CBS 2026 busca reunir a expertos líderes para
+                    compartir sus avances e investigaciones en este campo innovador. Este documento detalla la
+                    estructura operativa y académica para nuestros ponentes invitados, con el objetivo de asegurar una
+                    sesión profesional y de alto impacto, optimizando los tiempos de presentación e interacción con la
+                    comunidad científica.
                 </div>
                 <div class="intro-box content-en hidden">
-                    "This International Symposium, driven by the Synthetic Biology Community of UNMSM, brings together
-                    leading scientists with the purpose of disseminating their latest advances in the field. We aim to
-                    create an educational and collaborative environment where their investigation not only informs but
-                    inspires the next generation of researchers and strengthens global cooperation networks."
+                    The CBS 2026 International Synthetic Biology Symposium aims to bring together leading experts to
+                    share their advancements and research in this innovative field. This document outlines the
+                    operational and academic structure for our invited speakers, with the goal of ensuring a
+                    professional and high-impact session, optimizing presentation and interaction times with the
+                    scientific community.
                 </div>
             </div>
         </header>
@@ -551,82 +622,129 @@
 
             <div class="col-context">
                 <div class="content-es incentives-row">
-                    <div class="badge"><span class="badge-icon">✦</span> Apoyado por la FCB-UNMSM</div>
-                    <div class="badge"><span class="badge-icon">✦</span> Networking Global</div>
+                    <div class="badge"><span class="badge-icon">👥</span> +150 Asistentes Estimados</div>
+                    <div class="badge"><span class="badge-icon">🎓</span> Pregrado y Posgrado</div>
                 </div>
                 <div class="content-en incentives-row hidden">
-                    <div class="badge"><span class="badge-icon">✦</span> Supported by FCB-UNMSM</div>
-                    <div class="badge"><span class="badge-icon">✦</span> Global Networking</div>
+                    <div class="badge"><span class="badge-icon">👥</span> +150 Estimated Attendees</div>
+                    <div class="badge"><span class="badge-icon">🎓</span> Undergrad & Grad Students</div>
                 </div>
 
                 <div class="themes-wrapper">
-                    <span class="theme-label content-es">Ejes Temáticos:</span>
-                    <span class="theme-label content-en hidden">Key Topics:</span>
-
+                    <span class="theme-label content-es">Ejes Temáticos del Proyecto:</span>
+                    <span class="theme-label content-en hidden">Project Key Topics:</span>
                     <div class="pills-container">
                         <span class="pill">Synthetic Biology</span>
                         <span class="pill">Gene Circuits</span>
                         <span class="pill">Bioremediation</span>
-                        <span class="pill">Wet Lab/Dry Lab</span>
+                        <span class="pill">Wet/Dry Lab</span>
                     </div>
                 </div>
 
                 <div class="text-block">
-                    <h3 class="content-es">Nuestra Misión</h3>
-                    <h3 class="content-en hidden">Our Mission</h3>
-                    <p class="content-es">Promover el intercambio académico y científico mediante la difusión de
-                        investigaciones y tendencias emergentes en biología sintética, fomentando la construcción de
-                        redes colaborativas globales.</p>
-                    <p class="content-en hidden">To promote academic and scientific exchange by disseminating research
-                        and emerging trends in synthetic biology, fostering the construction of global collaborative
-                        networks.</p>
-                </div>
+                    <h3 class="content-es">Formato de la Sesión (Desglose)</h3>
+                    <h3 class="content-en hidden">Session Format (Breakdown)</h3>
 
-                <div class="text-block">
-                    <h3 class="content-es">Nuestra Visión</h3>
-                    <h3 class="content-en hidden">Our Vision</h3>
-                    <p class="content-es" style="margin-bottom:0;">Impulsar el desarrollo responsable, innovador y
-                        colaborativo de la biología sintética en distintos contextos científicos.</p>
-                    <p class="content-en hidden" style="margin-bottom:0;">To drive the responsible, innovative, and
-                        collaborative development of synthetic biology across diverse scientific contexts.</p>
-                </div>
-
-                <div class="text-block">
-                    <h3 class="content-es">Público objetivo</h3>
-                    <h3 class="content-en hidden">Target Audience</h3>
-                    <p class="content-es" style="margin-bottom:0;">Estudiantes de pregrado, egresados e investigadores
-                        de las carreras de biotecnología, microbiología, biología, genética y áreas afines.
+                    <p class="content-es" style="font-size: 0.9rem; margin-bottom: 20px;">
+                        Estructura optimizada de 2 horas para maximizar impacto académico y networking.
                     </p>
-                    <p class="content-en hidden" style="margin-bottom:0;">Undergraduate students, graduates and
-                        researchers of the careers in biotechnology, microbiology, biology, genetics and related fields.
+                    <p class="content-en hidden" style="font-size: 0.9rem; margin-bottom: 20px;">
+                        Optimized 2-hour structure to maximize academic impact and networking.
+                    </p>
+
+                    <div class="schedule-box">
+                        <div class="schedule-row">
+                            <div class="time-slot t-intro">10 min</div>
+                            <div>
+                                <strong class="content-es">Apertura y Protocolo</strong>
+                                <strong class="content-en hidden">Opening & Protocol</strong>
+                                <div class="schedule-description">Bienvenida y lectura de bio.</div>
+                            </div>
+                        </div>
+                        <div class="schedule-row">
+                            <div class="time-slot t-main">45-50 min</div>
+                            <div>
+                                <strong class="content-es">Conferencia Magistral</strong>
+                                <strong class="content-en hidden">Keynote Session</strong>
+                                <div class="schedule-description">Exposición central del tema.</div>
+                            </div>
+                        </div>
+                        <div class="schedule-row">
+                            <div class="time-slot t-qa">30-45 min</div>
+                            <div>
+                                <strong class="content-es">Conversatorio / Q&A</strong>
+                                <strong class="content-en hidden">Discussion / Q&A</strong>
+                                <div class="schedule-description">Dinámica moderada con preguntas preparadas.</div>
+                            </div>
+                        </div>
+                        <div class="schedule-row">
+                            <div class="time-slot t-net">20 min</div>
+                            <div>
+                                <strong class="content-es">Cierre y Networking</strong>
+                                <strong class="content-en hidden">Closing & Networking</strong>
+                                <div class="schedule-description">Buffer de tiempo y foto oficial.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-block" style="margin-top: 25px;">
+                    <h3 class="content-es">Dinámica de Interacción</h3>
+                    <h3 class="content-en hidden">Interaction Dynamics</h3>
+                    <p class="content-es">
+                        Contaremos con un moderador que facilitará el diálogo mediante un <strong>banco de preguntas
+                            disparadoras</strong> para garantizar una sesión fluida y participativa.
+                    </p>
+                    <p class="content-en hidden">
+                        A moderator will facilitate the dialogue using a <strong>bank of trigger questions</strong> to
+                        ensure a fluid and participatory session.
                     </p>
                 </div>
             </div>
 
             <div class="col-action">
-                <div class="detail-group">
-                    <span class="detail-label content-es">FECHAS</span>
-                    <span class="detail-label content-en hidden">DATES</span>
-                    <div class="detail-value">Marzo 05 - 07 <span
-                            style="font-size:0.6em; opacity:0.7; vertical-align:middle;">(UTC-5)</span></div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <span class="detail-label content-es">FECHAS</span>
+                        <span class="detail-label content-en hidden">DATES</span>
+                        <div style="font-size:0.95rem; color:white; font-weight:500;">Mar 05-07, 2026</div>
+                    </div>
+                    <div>
+                        <span class="detail-label content-es">PLATAFORMA</span>
+                        <span class="detail-label content-en hidden">PLATFORM</span>
+                        <div style="font-size:0.95rem; color:white; font-weight:500;">Zoom</div>
+                    </div>
                 </div>
 
                 <div class="detail-group">
-                    <span class="detail-label content-es">PLATAFORMA</span>
-                    <span class="detail-label content-en hidden">PLATFORM</span>
-                    <div class="detail-value">Google Meet 📹</div>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label content-es">Idioma</span>
-                    <span class="detail-label content-en hidden">LANGUAGE</span>
-                    <div class="detail-value">Español / English</div>
+                    <span class="detail-label content-es">ROL SOLICITADO</span>
+                    <span class="detail-label content-en hidden">REQUESTED ROLE</span>
+                    <div class="detail-value content-es">Ponente Magistral</div>
+                    <div class="detail-value content-en hidden">Keynote Speaker</div>
                 </div>
 
-                <div class="detail-group">
-                    <span class="detail-label content-es">DURACIÓN PONENCIA</span>
-                    <span class="detail-label content-en hidden">SESSION DURATION</span>
-                    <div class="detail-value">2 Horas / Hours</div>
+                <hr class="benefits-divider">
+
+                <span class="detail-label content-es" style="margin-bottom:15px; display:block;">BENEFICIOS</span>
+                <span class="detail-label content-en hidden" style="margin-bottom:15px; display:block;">BENEFITS</span>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">📜</div>
+                    <div class="benefit-text">
+                        <span class="content-es">Certificación Oficial a nombre de la UNMSM</span>
+                        <span class="content-en hidden">Official Certification by UNMSM</span>
+                    </div>
                 </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">🌎</div>
+                    <div class="benefit-text">
+                        <span class="content-es">Networking Colaborativo Región LATAM</span>
+                        <span class="content-en hidden">Collab Networking in LATAM Region</span>
+                    </div>
+                </div>
+
+                <hr class="benefits-divider">
 
                 <div class="contact-wrapper">
                     <span class="tooltip-success" id="copyTooltip">
@@ -634,25 +752,22 @@
                         <span class="content-en hidden">Email Copied! ✅</span>
                     </span>
 
-                    <a href="mailto:cbsunmsm@gmail.com?subject=Información%20Simposio%20SynBio%202026"
+                    <a href="mailto:cbsunmsm@gmail.com?subject=Confirmación%20Ponente%20Symposium%202026"
                         class="btn-smart-email" id="emailBtn" onclick="copyToClipboard(event)">
-                        <span class="content-es">Contáctenos</span>
-                        <span class="content-en hidden">Contact Us</span>
+                        <span class="content-es">Confirmar Participación</span>
+                        <span class="content-en hidden">Confirm Participation</span>
                         <span class="copy-icon">✉️</span>
                     </a>
                 </div>
 
-                <div style="text-align:center; margin-top:10px; font-size:0.75rem; color:rgba(255,255,255,0.6);">
-                    email: cbsunmsm@gmail.com
-                </div>
-
-                <p class="disclaimer content-es">* Información sujeta a cambios hasta 1 mes antes, en al que será
-                    notificado el investigador participante.</p>
-                <p class="disclaimer content-en hidden">* Information subject to change up to 1 month prior, when the
-                    participant researcher will be notified.</p>
+                <p class="disclaimer content-es" style="margin-top:15px;">* Escríbenos para confirmar tu asistencia.
+                </p>
+                <p class="disclaimer content-en hidden" style="margin-top:15px;">* Email us to confirm your attendance.
+                </p>
             </div>
 
         </div>
+    </div>
     </div>
 
     <script>
